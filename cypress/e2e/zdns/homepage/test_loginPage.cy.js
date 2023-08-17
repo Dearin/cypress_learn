@@ -15,8 +15,8 @@ context('登录测试', () => {
       cy.visit('https://10.2.12.126/#/cloud/node-manager')
       cy.get('#username').should('be.visible')
       cy.get('#password').should('be.visible')
-      // cy.get('.ant-btn.ant-btn-primary"').should('have.text','登 录') --查不到元素
-      cy.contains('登 录').should('be.visible')
+      cy.get('.ant-btn.ant-btn-primary"').should('have.text', '登 录')
+      // cy.contains('登 录').should('be.visible')
     });
   });
 
