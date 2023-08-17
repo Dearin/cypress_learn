@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 context('Assertions', () => {
-  beforeEach(() => { // 类似setup,每个用例执行前进行操作？
+  beforeEach(() => { // 类似setup,每个用例执行前进行操作
     cy.visit('https://10.2.12.126/#')
   })
   
