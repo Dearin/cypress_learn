@@ -14,7 +14,6 @@ context("Business Check",()=>{
         cy.get('.create').click()
         cy.wait(3000); // 等待 2 秒（根据需要调整等待时间）-- select 元素不等待会有几率报错
 
-
         cy.get('textarea[class="required union networks"]').type("192.0.0.0/24")
         cy.get('select[name="group_type"]').select('encoding')
         // 点击form表单中but
