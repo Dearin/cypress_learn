@@ -11,7 +11,7 @@ module.exports = defineConfig({
   },
   defaultCommandTimeout: 5000,
   retries: {
-    "runMode": 3,
-    "openMode": 3
+    "runMode": 1,
+    "openMode": 1
   }
 })

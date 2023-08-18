@@ -1,40 +1,40 @@
 /// <reference types="cypress" />
 
 import LoginPage from "../../../pages/LoginPage";
+import {LoginUsers} from "../../../datas/loginPage.data"
+context('登录页面', () => {
 
-context('登录测试', () => {
-  // beforeEach(() => { // 类似setup,每个用例执行前进行操作
-  //   cy.visit('https://10.2.12.126/#')
-  // })
-  const username = "admin"
-  const password = "admin"
-  // describe 是一种 Cypress 方法（从Mocha借来的），用于包含一个或多个相关测试。每次您开始为功能编写新的测试套件时，都将其包装在 describe 块中。
-  // context 函数也用于创建测试套件，它实际上是 describe 函数的一个别名，目的是为了提高测试代码的可读性。context 与 describe 作用相同，用于组织测试用例，但通常用于创建更多层次的组织结构，以更清晰地表示不同的测试场景。
   describe('Login Page Check', () => {
-    it('Visits the  HomePage', () => {
-      cy.visit('https://10.2.12.126/#/cloud/node-manager')
-      cy.get('#username').should('be.visible')
-      cy.get('#password').should('be.visible')
-      cy.get('.ant-btn.ant-btn-primary"').should('have.text', '登 录')
-      // cy.contains('登 录').should('be.visible')
+    it('Visits the LoginPage', () => {
+      const loginInstance = new LoginPage()
+      cy.visit(loginInstance.url)
+      loginInstance.isTargetPage()
+      cy.get(loginInstance.username).should('be.visible')
+      cy.get(loginInstance.password).should('be.visible')
+      // cy.get('.ant-btn.ant-btn-primary"').should('have.text', '登 录')
+      cy.contains('登 录').should('be.visible')
     });
   });
 
   describe('User Login', () => {
     //it 的函数，它是实际的测试块
-    it('Login Successfully', () => {
-      // PO模式
-      const loginInstance = new LoginPage()
-      loginInstance.isTargetPage()
-      loginInstance.login(username, password)
-      // 登录成功，进入主页
-      cy.url().should('include', 'cloud/node-manager')
-      // 原始模式
-      // cy.visit('https://10.2.12.126/#/cloud/node-manager')
-      // // cy.get('form')
-      // cy.get('input[id="username"]').type("admin").should("have.value", "admin"); //判断框内存在数值
-      // cy.get('input[id="password"]').type("admin")
-      // cy.get('form').submit()
-    });
+    for (const user of successLoginUsers){
+      it('Authorized Users Login Successfully', () => {
+        // PO模式
+        const loginInstance = new LoginPage()
+        cy.visit(loginInstance.url)
+        loginInstance.login(user.username, user.password)
+        //检查url
+        if(user.type=="right"){
+          cy.url().should('include', 'cloud/node-manager')
+          cy.get("#user-info").contains("欢迎").contains(user.username)
+        }else{
+          const checkStr="用户名/密码验证失败" ? user.type=="wrong" : "用户不存在"
+          loginInstance.isTargetPage()
+          cy.get('.content').contains(checkStr)
+        }
+      });
+    }
+
   });
 });
