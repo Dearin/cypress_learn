@@ -4,7 +4,7 @@ context("网络管理测试套件", () => {
     })
     beforeEach(() => {
         console.log("测试前置操作")
-        cy.visit('https://10.2.12.126/#/cloud/node-manager')
+        cy.visit(JSON.stringify(Cypress.env("host"))) //从环境配置中读取数据
         cy.get('input[id="username"]').type("admin").should("have.value", "admin"); //判断框内存在数值
         cy.get('input[id="password"]').type("admin")
         cy.get('form').submit()
@@ -31,6 +31,7 @@ context("网络管理测试套件", () => {
 
     afterEach(() => {
         console.log("测试后置操作，数据清理等接口")
+
     })
     after(() => {
         console.log("测试后置操作，数据清理等接口")

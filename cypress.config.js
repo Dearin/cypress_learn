@@ -7,11 +7,16 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.js')(on, config)
     },
-    baseUrl: 'http://localhost:5000',
+    //进行cy.request\cy.visit使用,疑问:?
+    baseUrl: 'https://10.2.12.126/#/',
   },
   defaultCommandTimeout: 5000,
   retries: {
     "runMode": 1,
     "openMode": 1
+  },
+  env:{
+    debug:"https://10.2.12.126",
+    prod:"https://10.2.12.11"
   }
 })
